@@ -98,12 +98,42 @@ if(isset($_POST["modifier"])){
     $query = mysqli_query($connexion, $requete);
     $_GET["modif"] = "Modification effectuée";
     header("Location:admin.php?modif=1");
+
 }
 
-
-
-
-
-
-
 ?>
+
+<section>
+    <h1>Modifier une réservation</h1>
+    <article>
+        <?php
+            $connexion_res = mysqli_connect("localhost","root","","camping");
+            $requete_res = "SELECT u.id,u.login,r.lieu,r.debut,r.fin,r.option1,r.option2,r.option3,r.nb_emplacement,r.id_utilisateur FROM utilisateurs AS u INNER JOIN reservations AS r WHERE u.id = r.id_utilisateur";
+            echo $requete_res;
+            $query_res = mysqli_query($connexion_res, $requete_res);
+            $resultat_res = mysqli_fetch_all($query_res);
+            var_dump($resultat_res);
+
+            foreach($resultat_res as $resultat){
+                $user_id = $resultat[0];
+                $user_login = $resultat[1];
+                $store_lieu = $resultat[2];
+                $store_debut = $resultat[3];
+                $debut_jour = strftime("%A", strtotime($store_debut));
+                echo $debut_jour;
+                $debut_mois = strftime("%B", strtotime($store_debut));
+                echo $debut_mois;
+
+
+                $store_fin = $resultat[4];
+            }
+
+        ?>
+    </article>
+</section>
+
+
+
+
+
+
