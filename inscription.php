@@ -84,7 +84,7 @@ $connexion=mysqli_connect("localhost","root","","camping");
         }
         elseif(!empty($resultatMail))
         {
-            echo"mail déja pris pd";
+            echo"mail déja pris";
         }
         elseif(!empty($password) && $password!=$confirmpassword)
         {
