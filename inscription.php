@@ -67,9 +67,18 @@ $connexion=mysqli_connect("localhost","root","","camping");
 
 	if(isset($_POST['confirm']))
 	{
+        
+        if($_POST['password']==$_POST['confirmpassword'])
+        {
+          
+        }
+        else
+        {
+         echo "champ vide ou mdp incorrects";
+        } 
         $login=$_POST['login'];
-        $password=$_POST['password'];
-        $confirmpassword=$_POST['confirmpassword'];
+        $password= password_hash($_POST['password'],PASSWORD_DEFAULT, array('cost'=>12));
+        $confirmpassword= password_hash($_POST['confirmpassword'],PASSWORD_DEFAULT, array('cost'=>12));
         $mail=$_POST['mail'];              
 		$requeteSelectLogin = "SELECT login FROM utilisateurs WHERE login='".$login."'" ;    
         $querySelectLogin = mysqli_query($connexion, $requeteSelectLogin);
@@ -84,12 +93,9 @@ $connexion=mysqli_connect("localhost","root","","camping");
         }
         elseif(!empty($resultatMail))
         {
-            echo"mail déja pris";
+            echo"mail déja pris ";
         }
-        elseif(!empty($password) && $password!=$confirmpassword)
-        {
-            echo "champ vide ou mdp incorrects";
-        }
+       
         else
         {
             $requeteInsert= "INSERT INTO utilisateurs (login,password,mail) VALUES('".$login."','".$password."','".$_POST['mail']."')";  
